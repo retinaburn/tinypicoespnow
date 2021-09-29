@@ -19,15 +19,6 @@ except OSError as err:
     if err.args[1] == 'ESP_ERR_ESPNOW_EXIST':
         print("Peer already exists")
 
-# peer = b'\x50\x02\x91\xa1\x9f\x90'   # MAC address of peer's wifi interface
-# try:
-#     e.add_peer(peer)
-# except OSError as err:
-#     if len(err.args) < 2:
-#         raise err
-#     if err.args[1] == 'ESP_ERR_ESPNOW_EXIST':
-#         print("Peer already exists")
-
 print("Starting")
 try:
     e.send("Starting...")       # Send to all peers
@@ -42,4 +33,4 @@ for i in range(100):
     e.send(sendVal)
     print("Sent: ", sendVal)
     sleep(1)
-    e.send(b'end')
+    e.send(b'END')
