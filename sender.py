@@ -1,6 +1,21 @@
 import network
 from esp import espnow
 from time import sleep
+from machine import Pin
+import uasyncio
+
+redPin = Pin(5, Pin.OUT)
+
+async def blink():
+    redPin.on()
+    #await uasyncio.sleep_ms(1000)
+    #await uasyncio.sleep(0.5)
+    sleep(0.3)
+    redPin.off()
+    
+
+async def createBlink():
+    uasyncio.create_task(blink())
 
 # A WLAN interface must be active to send()/recv()
 w0 = network.WLAN(network.STA_IF)  # Or network.AP_IF
@@ -32,5 +47,6 @@ for i in range(100):
     sendVal = str(i)*20
     e.send(sendVal)
     print("Sent: ", sendVal)
-    sleep(1)
     e.send(b'END')
+    uasyncio.run(createBlink())
+    sleep(1)
