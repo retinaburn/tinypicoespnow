@@ -1,7 +1,23 @@
 import network
 from esp import espnow
 import ubinascii
+import uasyncio
 
+from machine import Pin
+from time import sleep
+
+bluePin = Pin(5, Pin.OUT)
+
+async def blink():
+    bluePin.on()
+    #await uasyncio.sleep_ms(1000)
+    #await uasyncio.sleep(0.5)
+    sleep(0.3)
+    bluePin.off()
+    
+
+async def createBlink():
+    uasyncio.create_task(blink())
 # A WLAN interface must be active to send()/recv()
 w0 = network.WLAN(network.STA_IF)
 w0.active(True)
@@ -20,13 +36,13 @@ except OSError as err:
         print("Peer already exists")
 
 while True:
-    print("poll: ",e.poll())
-    print("stats:",e.stats())
-    print("Receving....")
+    print("poll: ",e.poll(),", ",e.stats())
     host, msg = e.irecv(1000)     # Available on ESP32 and ESP8266
-    print("....")
     if msg:             # msg == None if timeout in irecv()
-        print(ubinascii.hexlify(host,':').decode(), msg.decode("utf-8"))
+        message = msg.decode("utf-8")
+        if (message == "END"):
+            uasyncio.run(createBlink())
+        print(ubinascii.hexlify(host,':').decode(), message)
         #
     else:
         print("Nothing")
