@@ -11,14 +11,14 @@ bluePin = Pin(5, Pin.OUT)
 async def blink():
     bluePin.on()
     #await uasyncio.sleep_ms(1000)
-    #await uasyncio.sleep(0.5)
-    sleep(0.3)
+    await uasyncio.sleep(0.5)
+    #sleep(0.3)
     bluePin.off()
     
 
 async def createBlink():
     uasyncio.create_task(blink())
-    
+
 # A WLAN interface must be active to send()/recv()
 w0 = network.WLAN(network.STA_IF)
 w0.active(True)

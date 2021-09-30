@@ -9,8 +9,8 @@ redPin = Pin(5, Pin.OUT)
 async def blink():
     redPin.on()
     #await uasyncio.sleep_ms(1000)
-    #await uasyncio.sleep(0.5)
-    sleep(0.3)
+    await uasyncio.sleep(0.5)
+    #sleep(0.3)
     redPin.off()
     
 
@@ -42,11 +42,10 @@ except OSError as err:
         print("Ok.... adding Peer")
         e.add_peer(peer)
 for i in range(100):
-    print("poll: ", e.poll())
-    print("stats: ", e.stats())
+    print("poll: ", e.poll(),", stats: ",e.stats())
     sendVal = str(i)*20
     e.send(sendVal)
-    print("Sent: ", sendVal)
     e.send(b'END')
+    print("Sent: ", sendVal)
     uasyncio.run(createBlink())
     sleep(1)
