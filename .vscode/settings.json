@@ -1,0 +1,18 @@
+{
+    "python.languageServer": "Pylance",
+    "python.autoComplete.extraPaths": [
+        "src/lib",
+        "stubs/micropython-esp32-1_16",
+        "stubs/cpython_core",
+        "stubs/micropython-1_16-frozen/esp32/UM_TINYPICO", 
+    ],
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.jediEnabled": false,
+    "python.analysis.extraPaths": [
+        "src/lib",
+        "stubs/micropython-esp32-1_16",
+        "stubs/cpython_core",
+        "stubs/micropython-1_16-frozen/esp32/UM_TINYPICO"
+    ],
+}
