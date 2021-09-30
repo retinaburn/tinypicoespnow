@@ -18,6 +18,7 @@ async def blink():
 
 async def createBlink():
     uasyncio.create_task(blink())
+    
 # A WLAN interface must be active to send()/recv()
 w0 = network.WLAN(network.STA_IF)
 w0.active(True)
