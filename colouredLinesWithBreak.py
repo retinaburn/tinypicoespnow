@@ -43,6 +43,12 @@ sleepS = 0.10
 elemOff  = (0, 0, 0, 0)
 
 while True:
+    elemOn = (0, 0, 255, 0)
+    drawLine()
+    elemOn = (0, 255, 0, 0)
+    drawLine()
+    elemOn = (255, 0, 0, 0)
+    drawLine()
     elemOn = (0, 0, 0, 255)
     drawLine()
 
