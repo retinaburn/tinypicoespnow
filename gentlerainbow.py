@@ -6,7 +6,7 @@ from uasyncio import sleep_ms
 
 pin = 25
 number = 60
-brightness = 0.1
+brightness = 1.0
 
 np = neopixel.NeoPixel(Pin(pin), number, 4)
 
@@ -39,6 +39,6 @@ def rainbow_cycle(wait):
         np.write()
         time.sleep_ms(wait)
 
-for i in range(100):
+while True:
     rainbow_cycle(1)
 

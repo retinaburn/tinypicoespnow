@@ -1,5 +1,5 @@
 import neopixel
-from machine import Pin, SoftSPI
+from machine import Pin, SoftSPI, TouchPad
 import time
 #from ulab import numpy as nd
 from collections import deque
@@ -16,20 +16,31 @@ tinypico.set_dotstar_power(True)
 np = neopixel.NeoPixel(Pin(pin), leds, 4)
 d = deque((), leds, True)
 
-def getSinVal(amplitude, phaseShift, degrees):
-    sinVal = abs(math.sin(math.radians(degrees) + phaseShift))
+def getSinVal(amplitude, phaseShift, degrees, period):
+    sinVal = abs(math.sin(math.radians(period * degrees) + phaseShift))
     roundedSinVal = round (sinVal * amplitude)
     #print ("sin(",degrees,") = ",sinVal," -> ", roundedSinVal)
     return roundedSinVal
 
+period = 1.0
 for i in range(leds):
-    d.append( (getSinVal(32,0,i * 3), 0, 0, getSinVal(255,0,i * 3) ) )
+    d.append( (getSinVal(32,0,i * 3, period), 0, 0, getSinVal(255,0,i * 3, period) ) )
 
+t = TouchPad(Pin(27))
 
-while True:          
-    for i in range(leds):
-        np[i] = d.popleft()
-        d.append(np[i])        
-    np.write()
-    dotstar[0] = (64, 32, 32, np[0][3]/255)
-    d.append(d.popleft())
+mode = 0
+while True:
+    if (mode == 0):
+        while t.read() > 800:
+            for i in range(leds):
+                np[i] = d.popleft()
+                d.append(np[i])        
+            np.write()
+            dotstar[0] = (64, 32, 32, np[0][3]/255)
+            d.append(d.popleft())
+        mode = 1
+    else:
+        while t.read() > 800:
+            np.fill( (32, 0, 0, 128) )
+            np.write()
+        mode = 0

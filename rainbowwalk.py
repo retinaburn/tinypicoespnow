@@ -10,7 +10,7 @@ number = 60
 
 np = neopixel.NeoPixel(Pin(pin), number, 4)
 
-on = 32
+on = 255
 white = 0
 a = [ (on, 0, 0, white), (0, on, 0, white), (0, 0, on, white)]
 

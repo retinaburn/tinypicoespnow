@@ -11,7 +11,7 @@ number = 60
 
 np = neopixel.NeoPixel(Pin(pin), number, 4)
 
-on = 16         #the maximum brightness 
+on = 255         #the maximum brightness 
 white = 0
 sleepS = 0.0
 
