@@ -21,20 +21,23 @@ async def createBlink():
 
 # A WLAN interface must be active to send()/recv()
 w0 = network.WLAN(network.STA_IF)
+mac = w0.config('mac')
+print("MAC: ",mac, ubinascii.hexlify(mac, ':').decode())
+
 w0.active(True)
 
 e = espnow.ESPNow()
 e.init()
-# sender 50:02:91:a1:a1:70
-# receive 50:02:91:a1:9f:90
-peer = b'\x50\x02\x91\xa1\x9f\x90'   # MAC address of peer's wifi interface
-try:
-    e.add_peer(peer)
-except OSError as err:
-    if len(err.args) < 2:
-        raise err
-    if err.args[1] == 'ESP_ERR_ESPNOW_EXIST':
-        print("Peer already exists")
+# old 50:02:91:a1:a1:70
+# new receiver 50:02:91:a1:9f:90
+# peer = b'\x50\x02\x91\xa1\x9f\x90'   # MAC address of peer's wifi interface
+# try:
+#     e.add_peer(peer)
+# except OSError as err:
+#     if len(err.args) < 2:
+#         raise err
+#     if err.args[1] == 'ESP_ERR_ESPNOW_EXIST':
+#         print("Peer already exists")
 
 while True:
     print("poll: ",e.poll(),", ",e.stats())
