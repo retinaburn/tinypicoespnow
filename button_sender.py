@@ -41,8 +41,10 @@ peer = b'\xff\xff\xff\xff\xff\xff'   # MAC address of peer's wifi interface
 
 print("Starting")
 try:
-    e.send("Starting...")       # Send to all peers
+    e.send(peer, "Starting...")       # Send to all peers
 except OSError as err:
+    if err.args[1] == 'ESP_ERR_ESPNOW_EXIST':
+        print("Failed starting")
     if err.args[1] == 'ESP_ERR_ESPNOW_NOT_FOUND':
         print("ESPNOW Not Found")
         e.add_peer(peer)
@@ -50,7 +52,7 @@ except OSError as err:
 while True:
     if not button.value():
         print("poll: ", e.poll(),", stats: ",e.stats())
-        e.send(b'END')
+        e.send(peer, b'END')
         print("Sent: ", "END")
         uasyncio.run(createBlink())
     
