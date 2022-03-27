@@ -11,8 +11,8 @@ button = Pin(23, Pin.IN, Pin.PULL_UP)
 async def blink():
     redPin.on()
     #await uasyncio.sleep_ms(1000)
-    #await uasyncio.sleep(3)
-    sleep(3)
+    await uasyncio.sleep(3)
+    #sleep(3)
     redPin.off()
     
 
@@ -31,20 +31,20 @@ e.init()
 # new receiver 50:02:91:a1:9f:90
 #peer = b'\x50\x02\x91\xa1\x9f\x90'   # MAC address of peer's wifi interface
 peer = b'\xff\xff\xff\xff\xff\xff'   # MAC address of peer's wifi interface
-try:
-    e.add_peer(peer)
-except OSError as err:
-    if len(err.args) < 2:
-        raise err
-    if err.args[1] == 'ESP_ERR_ESPNOW_EXIST':
-        print("Peer already exists")
+# try:
+#     e.add_peer(peer)
+# except OSError as err:
+#     if len(err.args) < 2:
+#         raise err
+#     if err.args[1] == 'ESP_ERR_ESPNOW_EXIST':
+#         print("Peer already exists")
 
 print("Starting")
 try:
     e.send("Starting...")       # Send to all peers
 except OSError as err:
     if err.args[1] == 'ESP_ERR_ESPNOW_NOT_FOUND':
-        print("Ok.... adding Peer")
+        print("ESPNOW Not Found")
         e.add_peer(peer)
 
 while True:
@@ -53,5 +53,5 @@ while True:
         e.send(b'END')
         print("Sent: ", "END")
         uasyncio.run(createBlink())
-        sleep(1)
+    
     

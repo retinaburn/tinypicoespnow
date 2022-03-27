@@ -32,3 +32,5 @@ b'0\x83\x98\xc8\xad\xec' 30:83:98:c8:ad:ec
 ## Development
 1. pip3 install adafruit-ampy
 2. ampy -p COM4 put main.py
+
+3. rshell

@@ -10,9 +10,9 @@ redPin = Pin(5, Pin.OUT)
 
 async def blink():
     redPin.on()
-    print("Sleeping for 10...")
-    #await uasyncio.sleep(10)
-    sleep(10)
+    print("Sleeping for 5...")
+    await uasyncio.sleep(5)
+    #sleep(10)
     print ("Continue")
     redPin.off()
     
