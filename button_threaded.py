@@ -1,5 +1,5 @@
 import network
-from esp import espnow
+import espnow
 from time import sleep
 from machine import Pin
 import ubinascii
@@ -30,7 +30,7 @@ mac = w0.config('mac')
 print("MAC: ",mac, ubinascii.hexlify(mac, ':').decode())
 
 e = espnow.ESPNow()
-e.init()
+e.active(True)
 # old 50:02:91:a1:a1:70
 # new receiver 50:02:91:a1:9f:90
 #peer = b'\x50\x02\x91\xa1\x9f\x90'   # MAC address of peer's wifi interface
@@ -46,9 +46,9 @@ except OSError as err:
 _thread.start_new_thread(sendThread, ())
 
 while True:
-    print("poll: ", e.poll(),", stats: ",e.stats())
-    while e.poll():
-        host, msg = e.irecv(0)     # Available on ESP32 and ESP8266
+    print("poll: ", e.any(),", stats: ",e.stats())
+    while e.any():
+        host, msg = e.recv(0)     # Available on ESP32 and ESP8266
         if msg:             # msg == None if timeout in irecv()
             message = msg.decode("utf-8")
             print(ubinascii.hexlify(host,':').decode(), message)
